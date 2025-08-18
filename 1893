@@ -1,0 +1,21 @@
+bool isCovered(int** ranges, int rangesSize, int* rangesColSize, int left, int right) {
+   int palak[52] = {0};  // Support indexing up to 51 for end+1
+    for (int i = 0; i < rangesSize; i++) {
+        int start = ranges[i][0];
+        int end = ranges[i][1];
+        palak[start]++;
+        if (end + 1 < 52) {
+            palak[end + 1]--;
+        }
+    }
+    for (int i = 1; i < 52; i++) {
+        palak[i] += palak[i - 1];
+    }
+    for (int i = left; i <= right; i++) {
+        if (palak[i] <= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
