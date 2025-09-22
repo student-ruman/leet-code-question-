@@ -1,0 +1,30 @@
+int maximumPopulation(int** logs, int logsSize, int* logsColSize) {
+    int life[101] = {0};  // Tracks population changes from 1950-2050
+    
+    // Sweep line: +1 at birth, -1 at death
+    for (int i = 0; i < logsSize; i++) {
+        int birth = logs[i][0];
+        int death = logs[i][1];
+        life[birth - 1950]++;
+        life[death - 1950]--;
+    }
+    
+    int maxPopulation = 0;
+    int maxYear = 1950;
+    int currentPopulation = 0;
+    
+    // Prefix sum to compute population per year, find max and earliest year
+    for (int i = 0; i < 101; i++) {
+        currentPopulation += life[i];  // Accumulate population
+        int year = 1950 + i;
+        
+        if (currentPopulation > maxPopulation) {
+            maxPopulation = currentPopulation;
+            maxYear = year;
+        } else if (currentPopulation == maxPopulation && year < maxYear) {
+            maxYear = year;  // Update to earliest year in case of tie
+        }
+    }
+    
+    return maxYear;
+}
