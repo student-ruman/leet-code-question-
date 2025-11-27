@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ruman(n);
+        int i = 0;
+        int j = n - 1;
+        int k = n - 1;  // fill result from end
+        
+        while (i <= j) {
+            int L = nums[i] * nums[i];
+            int R = nums[j] * nums[j];
+            
+            if (L > R) {
+                ruman[k--] = L;
+                i++;
+            } else {
+                ruman[k--] = R;
+                j--;
+            }
+        }
+        
+        return ruman;
+    }
+};
