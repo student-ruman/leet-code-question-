@@ -1,0 +1,17 @@
+class Solution(object):
+    def subarraySum(self, nums, k):
+        count = 0
+        currSum = 0
+        prefix = {0: 1}   # very important (handles exact match)
+
+        for num in nums:
+            currSum += num
+
+            diff = currSum - k
+
+            if diff in prefix:
+                count += prefix[diff]
+
+            prefix[currSum] = prefix.get(currSum, 0) + 1
+
+        return count
